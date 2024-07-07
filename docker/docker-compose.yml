@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  fiap-car-reg-db:
+    image: postgres:latest
+    container_name: fiap-car-reg-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: fiap-car-reg-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - fiap-car-reg-data:/var/lib/postgresql/data
+
+volumes:
+  fiap-car-reg-data:

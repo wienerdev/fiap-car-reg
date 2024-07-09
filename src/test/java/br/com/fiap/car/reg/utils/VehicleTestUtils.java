@@ -1,9 +1,8 @@
 package br.com.fiap.car.reg.utils;
 
-import br.com.fiap.car.reg.adapter.out.jpa.vehicle.entities.VehicleEntity;
-import br.com.fiap.car.reg.application.BaseVehicleResponse;
 import br.com.fiap.car.reg.application.dto.request.CreateVehicleDto;
 import br.com.fiap.car.reg.application.dto.request.UpdateVehicleDto;
+import br.com.fiap.car.reg.application.dto.response.BaseVehicleResponse;
 import br.com.fiap.car.reg.application.dto.response.CreateVehicleResponse;
 import br.com.fiap.car.reg.application.dto.response.FindVehicleResponse;
 import br.com.fiap.car.reg.application.dto.response.UpdateVehicleResponse;
@@ -57,26 +56,6 @@ public class VehicleTestUtils {
 
     public static Vehicle generateVehicle() {
         return Vehicle.builder()
-                .id(1L)
-                .marca("Chevrolet")
-                .modelo("Onix")
-                .ano(2021)
-                .cor("Preto")
-                .preco(BigDecimal.valueOf(62000.00))
-                .quilometragem(32450)
-                .tipoCombustivel("Flex")
-                .numeroPortas(4)
-                .tipoTransmissao("Automático")
-                .numeroChassi("9B9B9SS88J")
-                .placa("ABC1234")
-                .descricao("Veículo em ótimo estado")
-                .status(VehicleStatusEnum.DISPONIVEL)
-                .dataCadastro(LocalDateTime.now())
-                .build();
-    }
-
-    public static VehicleEntity generateVehicleEntity() {
-        return VehicleEntity.builder()
                 .id(1L)
                 .marca("Chevrolet")
                 .modelo("Onix")

@@ -1,4 +1,4 @@
-package br.com.fiap.car.reg.application;
+package br.com.fiap.car.reg.application.dto.response;
 
 import br.com.fiap.car.reg.domain.enums.VehicleStatusEnum;
 import lombok.*;

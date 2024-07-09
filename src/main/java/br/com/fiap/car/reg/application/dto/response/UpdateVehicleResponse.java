@@ -1,7 +1,8 @@
 package br.com.fiap.car.reg.application.dto.response;
 
-import br.com.fiap.car.reg.application.BaseVehicleResponse;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class UpdateVehicleResponse extends BaseVehicleResponse {
 
     public UpdateVehicleResponse(BaseVehicleResponse updateVehicleResponse) {

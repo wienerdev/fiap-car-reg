@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.fiap.car.reg.adapter.out.jpa.VehicleJpaRepositoryAdapter;
+import br.com.fiap.car.reg.adapter.out.jpa.VehicleJpaRepositoryPortAdapter;
 import br.com.fiap.car.reg.adapter.out.jpa.vehicle.entities.VehicleEntity;
 import br.com.fiap.car.reg.adapter.out.jpa.vehicle.repositories.VehicleJpaRepository;
 import br.com.fiap.car.reg.domain.Vehicle;
@@ -24,7 +24,7 @@ public class VehicleJpaRepositoryAdapterTest {
     private VehicleJpaRepository vehicleJpaRepository;
 
     @InjectMocks
-    private VehicleJpaRepositoryAdapter vehicleJpaRepositoryAdapter;
+    private VehicleJpaRepositoryPortAdapter vehicleJpaRepositoryAdapter;
 
     @BeforeEach
     void setUp() {

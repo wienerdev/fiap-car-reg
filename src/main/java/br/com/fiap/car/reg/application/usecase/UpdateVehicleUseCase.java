@@ -1,9 +1,9 @@
-package br.com.fiap.car.reg.application.vehicle.usecase;
+package br.com.fiap.car.reg.application.usecase;
 
-import br.com.fiap.car.reg.application.interfaces.VehicleRepository;
+import br.com.fiap.car.reg.application.port.VehicleRepositoryPort;
 import br.com.fiap.car.reg.application.dto.request.UpdateVehicleDto;
 import br.com.fiap.car.reg.application.dto.response.UpdateVehicleResponse;
-import br.com.fiap.car.reg.application.vehicle.port.UpdateVehicleUseCasePort;
+import br.com.fiap.car.reg.application.port.UpdateVehicleUseCasePort;
 import br.com.fiap.car.reg.domain.Vehicle;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -14,17 +14,17 @@ import org.webjars.NotFoundException;
 @RequiredArgsConstructor
 public class UpdateVehicleUseCase implements UpdateVehicleUseCasePort {
 
-    private final VehicleRepository vehicleRepository;
+    private final VehicleRepositoryPort vehicleRepositoryPort;
     private final ModelMapper modelMapper;
 
     @Override
     public UpdateVehicleResponse updateVehicle(UpdateVehicleDto dto) {
-        Vehicle existingVehicle = vehicleRepository.findById(dto.getId())
+        Vehicle existingVehicle = vehicleRepositoryPort.findById(dto.getId())
                 .orElseThrow(() -> new NotFoundException("Veículo não existente na base de dados."));
 
         modelMapper.map(dto, existingVehicle);
 
-        Vehicle updatedVehicle = vehicleRepository.save(existingVehicle);
+        Vehicle updatedVehicle = vehicleRepositoryPort.save(existingVehicle);
         return modelMapper.map(updatedVehicle, UpdateVehicleResponse.class);
     }
 }

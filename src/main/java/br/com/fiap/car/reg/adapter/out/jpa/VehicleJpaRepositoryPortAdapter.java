@@ -1,6 +1,6 @@
 package br.com.fiap.car.reg.adapter.out.jpa;
 
-import br.com.fiap.car.reg.application.interfaces.VehicleRepository;
+import br.com.fiap.car.reg.application.port.VehicleRepositoryPort;
 import br.com.fiap.car.reg.domain.Vehicle;
 import br.com.fiap.car.reg.adapter.out.jpa.vehicle.entities.VehicleEntity;
 import br.com.fiap.car.reg.adapter.out.jpa.vehicle.repositories.VehicleJpaRepository;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class VehicleJpaRepositoryAdapter implements VehicleRepository {
+public class VehicleJpaRepositoryPortAdapter implements VehicleRepositoryPort {
 
     private final VehicleJpaRepository vehicleJpaRepository;
 

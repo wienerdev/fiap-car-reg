@@ -1,8 +1,8 @@
-package br.com.fiap.car.reg.application.vehicle.usecase;
+package br.com.fiap.car.reg.application.usecase;
 
 import br.com.fiap.car.reg.application.dto.request.UpdateVehicleDto;
 import br.com.fiap.car.reg.application.dto.response.UpdateVehicleResponse;
-import br.com.fiap.car.reg.application.interfaces.VehicleRepository;
+import br.com.fiap.car.reg.application.port.VehicleRepositoryPort;
 import br.com.fiap.car.reg.domain.Vehicle;
 import br.com.fiap.car.reg.domain.enums.VehicleStatusEnum;
 import br.com.fiap.car.reg.utils.VehicleTestUtils;
@@ -29,7 +29,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 public class UpdateVehicleUseCaseTest {
 
     @Mock
-    private VehicleRepository vehicleRepository;
+    private VehicleRepositoryPort vehicleRepositoryPort;
 
     @Mock
     private ModelMapper modelMapper;
@@ -49,15 +49,15 @@ public class UpdateVehicleUseCaseTest {
         Vehicle updatedVehicle = new Vehicle(VehicleTestUtils.generateUpdatedVehicle());
         UpdateVehicleResponse expectedResponse = new UpdateVehicleResponse(VehicleTestUtils.generateUpdateVehicleResponse());
 
-        when(vehicleRepository.findById(dto.getId())).thenReturn(Optional.of(existingVehicle));
-        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(updatedVehicle);
+        when(vehicleRepositoryPort.findById(dto.getId())).thenReturn(Optional.of(existingVehicle));
+        when(vehicleRepositoryPort.save(any(Vehicle.class))).thenReturn(updatedVehicle);
         when(modelMapper.map(any(Vehicle.class), eq(UpdateVehicleResponse.class))).thenReturn(expectedResponse);
 
         UpdateVehicleResponse actualResponse = updateVehicleUseCase.updateVehicle(dto);
 
         assertEquals(expectedResponse, actualResponse);
-        verify(vehicleRepository).findById(dto.getId());
-        verify(vehicleRepository).save(any(Vehicle.class));
+        verify(vehicleRepositoryPort).findById(dto.getId());
+        verify(vehicleRepositoryPort).save(any(Vehicle.class));
         verify(modelMapper).map(any(Vehicle.class), eq(UpdateVehicleResponse.class));
     }
 
@@ -65,7 +65,7 @@ public class UpdateVehicleUseCaseTest {
     void throwsNotFoundExceptionWhenVehicleDoesNotExist() {
         UpdateVehicleDto dto = new UpdateVehicleDto(VehicleTestUtils.generateUpdateVehicleDto());
 
-        when(vehicleRepository.findById(dto.getId())).thenReturn(Optional.empty());
+        when(vehicleRepositoryPort.findById(dto.getId())).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> updateVehicleUseCase.updateVehicle(dto));
     }

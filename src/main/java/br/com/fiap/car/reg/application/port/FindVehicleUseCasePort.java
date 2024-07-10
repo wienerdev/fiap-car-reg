@@ -1,4 +1,4 @@
-package br.com.fiap.car.reg.application.vehicle.port;
+package br.com.fiap.car.reg.application.port;
 
 import br.com.fiap.car.reg.application.dto.response.FindVehicleResponse;
 

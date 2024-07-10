@@ -1,6 +1,6 @@
-package br.com.fiap.car.reg.application.vehicle.usecase;
+package br.com.fiap.car.reg.application.usecase;
 
-import br.com.fiap.car.reg.application.interfaces.VehicleRepository;
+import br.com.fiap.car.reg.application.port.VehicleRepositoryPort;
 import br.com.fiap.car.reg.application.dto.request.CreateVehicleDto;
 import br.com.fiap.car.reg.application.dto.response.CreateVehicleResponse;
 import br.com.fiap.car.reg.domain.Vehicle;
@@ -22,7 +22,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 public class CreateVehicleUseCaseTest {
 
     @Mock
-    private VehicleRepository vehicleRepository;
+    private VehicleRepositoryPort vehicleRepositoryPort;
 
     @Mock
     private ModelMapper modelMapper;
@@ -41,14 +41,14 @@ public class CreateVehicleUseCaseTest {
         Vehicle vehicle = new Vehicle(VehicleTestUtils.generateVehicle());
         CreateVehicleResponse expectedResponse = new CreateVehicleResponse(VehicleTestUtils.generateCreateVehicleResponse());
 
-        when(vehicleRepository.save(any(Vehicle.class))).thenReturn(vehicle);
+        when(vehicleRepositoryPort.save(any(Vehicle.class))).thenReturn(vehicle);
         when(modelMapper.map(any(Vehicle.class), eq(CreateVehicleResponse.class))).thenReturn(expectedResponse);
 
         CreateVehicleResponse actualResponse = createVehicleUseCase.createVehicle(dto);
 
         assertEquals(expectedResponse, actualResponse);
         assertEquals(VehicleStatusEnum.DISPONIVEL, actualResponse.getStatus());
-        verify(vehicleRepository).save(any(Vehicle.class));
+        verify(vehicleRepositoryPort).save(any(Vehicle.class));
         verify(modelMapper).map(any(Vehicle.class), eq(CreateVehicleResponse.class));
     }
 }

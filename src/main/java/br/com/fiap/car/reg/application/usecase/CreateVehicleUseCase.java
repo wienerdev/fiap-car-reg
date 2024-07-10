@@ -1,9 +1,9 @@
-package br.com.fiap.car.reg.application.vehicle.usecase;
+package br.com.fiap.car.reg.application.usecase;
 
-import br.com.fiap.car.reg.application.interfaces.VehicleRepository;
+import br.com.fiap.car.reg.application.port.VehicleRepositoryPort;
 import br.com.fiap.car.reg.application.dto.request.CreateVehicleDto;
 import br.com.fiap.car.reg.application.dto.response.CreateVehicleResponse;
-import br.com.fiap.car.reg.application.vehicle.port.CreateVehicleUseCasePort;
+import br.com.fiap.car.reg.application.port.CreateVehicleUseCasePort;
 import br.com.fiap.car.reg.domain.Vehicle;
 import br.com.fiap.car.reg.domain.enums.VehicleStatusEnum;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CreateVehicleUseCase implements CreateVehicleUseCasePort {
 
-    private final VehicleRepository vehicleRepository;
+    private final VehicleRepositoryPort vehicleRepositoryPort;
     private final ModelMapper modelMapper;
 
     @Override
@@ -38,6 +38,6 @@ public class CreateVehicleUseCase implements CreateVehicleUseCasePort {
                 .dataCadastro(LocalDateTime.now())
                 .build();
 
-        return modelMapper.map(vehicleRepository.save(vehicle), CreateVehicleResponse.class);
+        return modelMapper.map(vehicleRepositoryPort.save(vehicle), CreateVehicleResponse.class);
     }
 }

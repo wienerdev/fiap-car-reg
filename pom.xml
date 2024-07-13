@@ -10,7 +10,8 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>fiap-car-reg</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
 	<name>fiap-car-reg</name>
 	<description>Aplicação para Registro de Veículos</description>
 	<properties>

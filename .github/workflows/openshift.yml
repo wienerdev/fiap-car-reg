@@ -61,4 +61,4 @@ jobs:
 
       - name: oc rollout 
         run: |
-          oc rollout status dc/fiap-car-reg -n wienerdev-dev
+          oc rollout status dc/fiap-car-reg-api -n wienerdev-dev

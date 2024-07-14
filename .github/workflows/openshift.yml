@@ -57,7 +57,7 @@ jobs:
 
       - name: Deploy App
         run: |
-          oc new-app ${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest -n ${{ env.OPENSHIFT_NAMESPACE }}
+          oc set image ${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest -n ${{ env.OPENSHIFT_NAMESPACE }}
       
       - name: oc rollout 
         run: |

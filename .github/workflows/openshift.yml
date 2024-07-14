@@ -57,8 +57,8 @@ jobs:
 
       - name: Deploy App
         run: |
-          oc set image dc/${{ env.APP_NAME }} ${env.APP_NAME}=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}:${{ env.IMAGE_TAGS }} -n ${{ env.OPENSHIFT_NAMESPACE }}
-      
+          oc set image dc/fiap-car-reg-api-2 fiap-car-reg-api-2=docker.io/wienerdev/fiap-car-reg-api-2:latest -n wienerdev-dev
+
       - name: oc rollout 
         run: |
           oc rollout status dc/fiap-car-reg -n wienerdev-dev

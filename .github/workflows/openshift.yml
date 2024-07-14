@@ -1,69 +1,53 @@
-name: OpenShift
-
-env:
-  IMAGE_REGISTRY: docker.io/wienerdev
-  IMAGE_REGISTRY_USER: wienerdev
-  IMAGE_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-  IMAGE_TAGS: latest ${{ github.sha }}
-
-  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
-  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
-  OPENSHIFT_NAMESPACE: "wienerdev-dev"
-
-  APP_PORT: "8080"
+name: Pipeline fiap-car-reg
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build-and-push: 
-    name: Build and push to github container registry
-    runs-on: ubuntu-18.04
-    environment: development
-
-    outputs:
-        ROUTE: ${{ steps.deploy-and-expose.outputs.route }}
-        SELECTOR: ${{ steps.deploy-and-expose.outputs.selector }}
+  pipeline:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      id: checkout
-      uses: actions/checkout@v2
+      - uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+      - run: |
+          set -x
+          docker version
 
-   # https://github.com/redhat-actions/s2i-build#readme
-    - name: S2I Build 
-      id: build_image
-      uses: redhat-actions/s2i-build@v2
-      with:
-        path_context: '.'
-        builder_image: 'registry.access.redhat.com/ubi8/openjdk-11'
-        image: ${{ env.APP_NAME }}
-        tags: ${{ env.IMAGE_TAGS }}
+      - name: Install oc
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          oc: 4
+      
+      - name: oc login
+        run: |
+          oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
 
-    # https://github.com/redhat-actions/push-to-registry#readme
-    - name: Push to Registry 
-      id: push-to-registry
-      uses: redhat-actions/push-to-registry@v2
-      with:
-        image: ${{ steps.build_image.outputs.image }}
-        tags: ${{ steps.build_image.outputs.tags }}
-        registry: ${{ env.IMAGE_REGISTRY }}
-        username: ${{ env.REGISTRY_USER }}
-        password: ${{ env.REGISTRY_PASSWORD }}
+      - name: Check out code
+        uses: actions/checkout@v2
 
-    # The path the image was pushed to is now stored in ${{ steps.push-to-registry.outputs.registry-path }}
+      - name: Docker build
+        run: |
+          docker build -t wienerdev/fiap-car-reg:latest .
 
-    # https://github.com/redhat-actions/oc-login#readme
-    - name: Log in to OpenShift 
-      uses: redhat-actions/oc-login@v1
-      with:
-        openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-        openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-        insecure_skip_tls_verify: true
-        namespace: ${{ env.OPENSHIFT_NAMESPACE }}
+      - name: Docker login
+        run: |
+          docker login -u wienerdev -p ${{ secrets.REGISTRY_PASSWORD }}
+      
+      - name: Docker push
+        run: |
+          docker push wienerdev/fiap-car-reg:latest
 
-    # Run a script to create a new app or update the current one with the previously pushed container image
-    - run: | 
-         "${GITHUB_WORKSPACE}/.github/script.sh" ${{ env.APP_NAME }} ${{ env.IMAGE_REGISTRY }}/${{ steps.build_image.outputs.image }}:${{ github.sha }} ${{ env.OPENSHIFT_NAMESPACE }}
+      - name: oc import image
+        run: |
+         oc import-image image-registry.openshift-image-registry.svc:5000/wienerdev-dev/fiap-car-reg-api-2:latest --from=wienerdev/fiap-car-reg-api-2:latest --confirm
+
+      - name: Deploy App
+        run: |
+          oc patch dc fiap-car-reg -p '{"spec":{"template":{"spec":{"containers":[{"name":"fiap-car-reg","image":"default-route-openshift-image-registry.apps.sandbox-m4.g2pi.p1.openshiftapps.com/wienerdev-dev/fiap-car-reg-api-2"}]}}}}' -n wienerdev-dev
+      
+      - name: oc rollout 
+        run: |
+          oc rollout status dc/fiap-car-reg -n wienerdev-dev

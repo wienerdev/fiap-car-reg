@@ -1,6 +1,6 @@
 <br>
 <h1 align="center">
-FiapCar 🚗
+FiapCar Registration API 🚗
 </h1>
 <br>
 

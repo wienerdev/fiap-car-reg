@@ -38,7 +38,7 @@ public class FindVehicleUseCaseTest {
     }
 
     @Test
-    void findAllVehiclesReturnsNonEmptyList() {
+    void findAllVehiclesReturnsNonEmptyList() throws Exception {
         Vehicle vehicle = VehicleTestUtils.generateVehicle();
         List<Vehicle> vehicles = Arrays.asList(vehicle);
         FindVehicleResponse response = VehicleTestUtils.generateFindVehicleResponse();
@@ -54,7 +54,7 @@ public class FindVehicleUseCaseTest {
     }
 
     @Test
-    void findAllVehiclesReturnsEmptyList() {
+    void findAllVehiclesReturnsEmptyList() throws Exception {
         when(vehicleRepositoryPort.findAll()).thenReturn(Arrays.asList());
 
         List<FindVehicleResponse> responses = findVehicleUseCase.findAllVehicles();

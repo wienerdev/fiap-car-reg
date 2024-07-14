@@ -27,7 +27,7 @@ public class VehicleRegistrationController {
     private final DeleteVehicleUseCasePort deleteVehicleUseCase;
 
     @GetMapping
-    public ResponseEntity<List<FindVehicleResponse>> findAllVehicles() {
+    public ResponseEntity<List<FindVehicleResponse>> findAllVehicles() throws Exception {
         return new ResponseEntity<>(findVehicleUseCase.findAllVehicles(), HttpStatus.OK);
     }
 

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface FindVehicleUseCasePort {
 
-    List<FindVehicleResponse> findAllVehicles();
+    List<FindVehicleResponse> findAllVehicles() throws Exception;
     FindVehicleResponse findVehicleById(Long id);
 }

@@ -38,7 +38,9 @@ Com a aplicação rodando, acesse o localhost (porta 8080), e usufrua do sistema
 
 ## Documentação 📒
 A documentação da API pode ser acessada em:
+
 [Swagger - Produção](https://fiap-car-reg-wienerdev-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com/swagger-ui/index.html)
+
 [Swagger - Local](http://localhost:8080/swagger-ui/index.html)
 
 ### Entregas do projeto
@@ -59,6 +61,34 @@ A documentação da API pode ser acessada em:
 
 # Evidências
 
+### Cobertura de testes
+![image](/images/coverage-fiap-reg.png)
+
+### CI/CD
+
+Github Actions:
+
+![image](/images/car-reg-cicd.png)
+
+### Documentação da API
+![image](/images/swagger-reg.png)
+
+### Deploy K8s (Redhat Openshift)
+
+![image](/images/pods-fiap-car.png)
+
+Evidências dos recursos criados no Openshift:
+
+![image](/images/evidencias-infra.png)
+
+### Desenho da arquitetura Hexagonal
+
+![image](/images/fiap-car-hexagonal-arch.png)
+
+### Banco de dados
+
+![image](/images/evidencia-bd.png)
+
 ## 🧠 Links importantes
 
 * [Referência para o padrão arquitetural REST](https://restfulapi.net/)
@@ -66,7 +96,5 @@ A documentação da API pode ser acessada em:
 * [Site oficial do Spring](https://spring.io/)
 * [Site oficial do Spring Initialzr para setup do projeto](https://start.spring.io/)
 * [SDKMan! para gerenciamento e instalação do Java e Maven](https://sdkman.io/)
-  
-![image](https://github.com/wienerdev/fiap-pedidos/assets/43960331/f7eba8ef-ee89-4110-b9a3-677dfac46454)
 
 ---

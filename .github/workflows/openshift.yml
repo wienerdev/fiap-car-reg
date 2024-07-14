@@ -1,5 +1,15 @@
 name: Pipeline fiap-car-reg
 
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_NAMESPACE: "wienerdev-dev"
+  APP_NAME: "fiap-car-reg-api-2"
+  IMAGE_REGISTRY: docker.io/wienerdev
+  IMAGE_REGISTRY_USER: wienerdev
+  IMAGE_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+  IMAGE_TAGS: "latest"
+
 on:
   push:
     branches:
@@ -42,11 +52,12 @@ jobs:
 
       - name: oc import image
         run: |
-         oc import-image image-registry.openshift-image-registry.svc:5000/wienerdev-dev/fiap-car-reg-api-2:latest --from=wienerdev/fiap-car-reg-api-2:latest --confirm
+          oc import-image image-registry.openshift-image-registry.svc:5000/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest --from=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}:latest --confirm -n ${{ env.OPENSHIFT_NAMESPACE }}
+
 
       - name: Deploy App
         run: |
-          oc patch dc fiap-car-reg -p '{"spec":{"template":{"spec":{"containers":[{"name":"fiap-car-reg","image":"default-route-openshift-image-registry.apps.sandbox-m4.g2pi.p1.openshiftapps.com/wienerdev-dev/fiap-car-reg-api-2"}]}}}}' -n wienerdev-dev
+          oc new-app ${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest -n ${{ env.OPENSHIFT_NAMESPACE }}
       
       - name: oc rollout 
         run: |

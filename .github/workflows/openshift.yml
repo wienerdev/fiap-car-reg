@@ -52,7 +52,7 @@ jobs:
 
       - name: oc import image
         run: |
-          oc import-image image-registry.openshift-image-registry.svc:5000/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest --from=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }}:latest --confirm -n ${{ env.OPENSHIFT_NAMESPACE }}
+          oc import-image image-registry.openshift-image-registry.svc:5000/${{ env.OPENSHIFT_NAMESPACE }}/${{ env.APP_NAME }}:latest --from=${{ env.IMAGE_REGISTRY }}/${{ env.APP_NAME }} --confirm -n ${{ env.OPENSHIFT_NAMESPACE }}
 
 
       - name: Deploy App

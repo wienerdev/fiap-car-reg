@@ -4,7 +4,7 @@ env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_NAMESPACE: "wienerdev-dev"
-  APP_NAME: "fiap-car-reg-api-2"
+  APP_NAME: "fiap-car-reg-api"
   IMAGE_REGISTRY: docker.io/wienerdev
   IMAGE_REGISTRY_USER: wienerdev
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -57,7 +57,7 @@ jobs:
 
       - name: Deploy App
         run: |
-          oc set image dc/fiap-car-reg-api-2 fiap-car-reg-api-2=docker.io/wienerdev/fiap-car-reg-api-2:latest -n wienerdev-dev
+          oc set image dc/fiap-car-reg-api fiap-car-reg-api=docker.io/wienerdev/fiap-car-reg-api:latest -n wienerdev-dev
 
       - name: oc rollout 
         run: |

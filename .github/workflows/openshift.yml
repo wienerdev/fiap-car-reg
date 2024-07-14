@@ -4,7 +4,7 @@ env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_NAMESPACE: "wienerdev-dev"
-  APP_NAME: "fiap-car-reg-api"
+  APP_NAME: "fiap-car-reg"
   IMAGE_REGISTRY: docker.io/wienerdev
   IMAGE_REGISTRY_USER: wienerdev
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}

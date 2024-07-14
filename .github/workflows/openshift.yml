@@ -57,7 +57,7 @@ jobs:
 
       - name: Deploy App
         run: |
-          oc set image dc/fiap-car-reg-api fiap-car-reg-api=docker.io/wienerdev/fiap-car-reg-api:latest -n wienerdev-dev
+          oc set image dc/fiap-car-reg-api fiap-car-reg-api=docker.io/wienerdev/fiap-car-reg-api/latest -n wienerdev-dev
 
       - name: oc rollout 
         run: |
